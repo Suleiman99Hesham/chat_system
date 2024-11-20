@@ -1,0 +1,82 @@
+version: '3.8'
+services:
+  app:
+    container_name: app
+    build: .
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    ports:
+      - "3000:3000"
+    volumes:
+      - ".:/app"
+    depends_on:
+      - db
+      - elasticsearch
+      - redis
+    environment:
+    - DATABASE_HOST=db
+    - DATABASE_USERNAME=root
+    - DATABASE_PASSWORD=password
+    - DATABASE_NAME=chat_system_development
+    - REDIS_URL=redis://redis:6379/0
+      
+  db:
+    image: mysql:5.7
+    container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: chat_system_development
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "3306:3306"
+    command: >
+      --default-authentication-plugin=mysql_native_password
+      --init-file=/docker-entrypoint-initdb.d/init.sql
+  
+  redis:
+    image: redis:7.0
+    volumes:
+      - ./redis_data:/data                        # Mount the data directory to host
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"] # Use custom config
+
+  redis_backup:
+    image: alpine:latest
+    container_name: redis_backup
+    volumes:
+      - ./redis_data:/data                      # Access Redis data
+      - ./redis_backups:/backups                # Store backups
+    entrypoint: >
+      /bin/sh -c "while true; do
+      sleep 3600;
+      cp /data/dump.rdb /backups/dump_$(date +%Y-%m-%d_%H-%M-%S).rdb;
+      find /backups -type f -mtime +1 -delete;
+      done"
+
+  sidekiq:
+    container_name: sidekiq
+    build: .
+    command: bundle exec sidekiq
+    depends_on:
+      - redis
+      - db
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+    volumes:
+      - ".:/app"
+
+  elasticsearch:
+    container_name: elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.2
+    environment:
+      - discovery.type=single-node
+    ports:
+      - "9200:9200"
+
+volumes:
+  db_data:
+  redis_data:
+  redis_backups:

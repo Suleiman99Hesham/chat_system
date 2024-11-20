@@ -1,0 +1,17 @@
+:concurrency: 10
+:queues:
+  - default
+
+:scheduler:
+  :schedule:
+    update_counts_job:
+      every: ["5m"] # Run every 30 minute
+      class: UpdateCountsJob
+
+    process_messages_job:
+      every: ["1m"] # Run every minute
+      class: "ProcessMessagesJob"
+
+    process_chats_job:
+      every: ["1m"] # Run every minute
+      class: "ProcessChatsJob"
