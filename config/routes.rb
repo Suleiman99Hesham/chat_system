@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     # Fetch all chats for a specific application
     get 'chats', to: 'chats#index'
 
-    resources :chats, param: :number, except: [:destroy] do
+    resources :chats, param: :number, except: [:destroy, :update] do
       # Fetch all messages for a specific chat
       get 'messages', to: 'messages#index'
 

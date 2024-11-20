@@ -5,9 +5,9 @@ class Message < ApplicationRecord
   belongs_to :chat
 
   # Custom ElasticSearch index configuration
-  settings do
+  settings index: { number_of_shards: 1 } do
     mappings dynamic: false do
-      indexes :body, type: :text, analyzer: 'english'
+      indexes :body, type: :text
     end
   end
 

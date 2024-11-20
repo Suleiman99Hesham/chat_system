@@ -79,7 +79,6 @@ This is a backend API for managing applications, chats, and messages, built with
 - `GET /applications/:token/chats`: List all chats for a specific application.
 - `POST /applications/:token/chats`: Create a new chat.
 - `GET /applications/:token/chats/:number`: Get details of a specific chat.
-- `PUT /applications/:token/chats/:number`: Update a chat.
 
 ### Messages
 - `GET /applications/:token/chats/:number/messages`: List all messages for a specific chat.

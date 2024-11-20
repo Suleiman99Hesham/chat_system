@@ -65,9 +65,9 @@ gem 'sidekiq', '~> 6.5'
 gem 'sidekiq-scheduler'
 gem 'activerecord-import'
 gem 'rack-attack'
-gem 'elasticsearch', '~> 7.10.0' # Compatible with Ruby 2.7
-gem 'elasticsearch-model', '~> 7.2.0' # Compatible with Elasticsearch ~> 7
-gem 'elasticsearch-rails', '~> 7.2.0' # Compatible with Elasticsearch ~> 7
+gem 'elasticsearch', '~> 7.17' # Compatible with Ruby 2.7
+gem 'elasticsearch-model', '~> 7.2' # Compatible with Elasticsearch ~> 7
+gem 'elasticsearch-rails', '~> 7.2' # Compatible with Elasticsearch ~> 7
 gem 'active_model_serializers', '~> 0.10.0'
 
 
