@@ -67,6 +67,9 @@ This is a backend API for managing applications, chats, and messages, built with
     ```
 * The chats and messages won't be created either until their respective queues have at least batch size items or it lasts for one minute in the queue. The batch is currently 10 to make testing the system easier. 
 
+### Postman Collection
+* You can test the system with this [Postman Collection](https://www.postman.com/suleimanhesham99/chat-system-space/collection/71kgxpu/chat-system-api?action=share&creator=9841489)
+
 ## API Endpoints
 
 ### Applications
