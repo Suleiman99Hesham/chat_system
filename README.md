@@ -60,7 +60,7 @@ This is a backend API for managing applications, chats, and messages, built with
 
 3. Access the application at http://localhost:3000.
 
-* You can change the following lines in "config/application.rb" to control the queue threshold for the chats and messages creation.
+* You can change the following lines in ".env" to control the queue threshold for the chats and messages creation.
     ```
     CHAT_QUEUE_THRESHOLD=10
     MESSAGE_QUEUE_THRESHOLD=10
