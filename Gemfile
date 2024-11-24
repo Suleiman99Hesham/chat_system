@@ -62,6 +62,7 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'redis'
 gem 'sidekiq', '~> 6.5'
+gem 'sidekiq-cron'
 gem 'sidekiq-scheduler'
 gem 'activerecord-import'
 gem 'rack-attack'

@@ -1,5 +1,6 @@
 class ChatSerializer < ActiveModel::Serializer
   attributes :number, :messages_count, :created_at, :updated_at
-  belongs_to :application
-  has_many :messages
+  def messages_count
+    object.messages_count || 0
+  end
 end

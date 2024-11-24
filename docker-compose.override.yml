@@ -1,0 +1,11 @@
+services:
+  app:
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+
+  elasticsearch:
+    healthcheck:
+      test: curl -s http://localhost:9200/_cat/health || exit 1
+      interval: 5s
+      retries: 10

@@ -67,7 +67,7 @@ class ProcessMessagesJob < ApplicationJob
 
     # Perform bulk insert
     Message.import(messages, validate: true)
-
+    Message.__elasticsearch__.import
     Rails.logger.info("Successfully processed #{messages.size} messages for chat ID #{chat_id}")
   rescue StandardError => e
     Rails.logger.error("Bulk message creation failed: #{e.message}")

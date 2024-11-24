@@ -1,4 +1,5 @@
 class MessagesController < ApplicationController
+  rescue_from Elasticsearch::Transport::Transport::Errors::NotFound, with: :handle_elasticsearch_error
   skip_before_action :verify_authenticity_token
   before_action :set_application
   before_action :set_chat
@@ -9,7 +10,7 @@ class MessagesController < ApplicationController
     messages = Rails.cache.fetch("chat:#{@chat.id}:messages", expires_in: 5.minutes) do
       @chat.messages
     end
-    render json: messages, each_serializer: MessageSerialize, status: :ok # Improve JSON Serialization
+    render json: messages, each_serializer: MessageSerializer, status: :ok # Improve JSON Serialization
   end
 
   def show
@@ -80,12 +81,16 @@ class MessagesController < ApplicationController
 
   # Search messages by body
   def search
-    rescue_from Elasticsearch::Transport::Transport::Errors::NotFound do |e|
-      render json: { error: "ElasticSearch not found: #{e.message}" }, status: :internal_server_error
-    end
-    
     if params[:body].present?
-      messages = Message.search(params[:body]).records.where(chat_id: @chat.id)
+      query = {
+        query: {
+          match: {
+            body: params[:body]
+          }
+        }
+      }
+      response = Message.search(query)
+      messages = response.records.where(chat_id: @chat.id)
       render json: messages, status: :ok
     else
       render json: { error: 'body parameter is missing' }, status: :bad_request
@@ -94,6 +99,10 @@ class MessagesController < ApplicationController
 
   
   private
+
+  def handle_elasticsearch_error(exception)
+    render json: { error: "ElasticSearch not found: #{exception.message}" }, status: :internal_server_error
+  end
 
   def set_application
     @application = Application.find_by!(token: params[:application_token])

@@ -9,6 +9,8 @@ Bundler.require(*Rails.groups)
 module ChatSystem
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
+    config.api_only = true
+    config.debug_exception_response_format = :api
     config.load_defaults 5.2
     config.active_job.queue_adapter = :sidekiq
     Sidekiq.configure_server do |config|

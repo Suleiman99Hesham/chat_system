@@ -17,6 +17,10 @@ RUN bundle install
 # Copy the rest of the application
 COPY . /app
 
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+ENTRYPOINT ["docker-entrypoint.sh"]
+
 # Expose port 3000
 EXPOSE 3000
 

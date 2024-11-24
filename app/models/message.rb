@@ -13,9 +13,14 @@ class Message < ApplicationRecord
 
   # Add a method to reindex data
   def as_indexed_json(_options = {})
-    self.as_json(only: %i[body chat_id])
+    self.as_json(only: [:body, :chat_id])
   end
 end
 
 # Ensure the ElasticSearch index is created
-Message.__elasticsearch__.create_index! force: true
+if !Message.__elasticsearch__.index_exists?
+  Message.__elasticsearch__.create_index!
+else
+  Rails.logger.info("Index already exists, skipping creation.")
+end
+

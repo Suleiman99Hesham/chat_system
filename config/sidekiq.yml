@@ -5,13 +5,13 @@
 :scheduler:
   :schedule:
     update_counts_job:
-      every: ["5m"] # Run every 30 minute
-      class: UpdateCountsJob
+      cron: "*/30 * * * *" # Every 30 minutes
+      class: "UpdateCountsJob"
 
     process_messages_job:
-      every: ["1m"] # Run every minute
+      cron: "*/1 * * * *" # Every 1 minute
       class: "ProcessMessagesJob"
 
     process_chats_job:
-      every: ["1m"] # Run every minute
+      cron: "*/1 * * * *" # Every 1 minute
       class: "ProcessChatsJob"
