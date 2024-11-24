@@ -13,7 +13,7 @@ services:
       - elasticsearch
     environment:
     - DATABASE_HOST=db
-    - DATABASE_USERNAME=root
+    - DATABASE_USERNAME=cs_user
     - DATABASE_PASSWORD=password
     - DATABASE_NAME=chat_system_development
     - DATABASE_PORT=3306
@@ -25,7 +25,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: chat_system_development
-      MYSQL_USER: root
+      MYSQL_USER: cs_user
       MYSQL_PASSWORD: password
     volumes:
       - db_data:/var/lib/mysql
@@ -71,7 +71,7 @@ services:
       RAILS_ENV: development
       REDIS_HOST: redis
       REDIS_PORT: 6379
-      DATABASE_USERNAME: root
+      DATABASE_USERNAME: cs_user
       DATABASE_NAME: chat_system_development
       DATABASE_PASSWORD: password
       DATABASE_HOST: db

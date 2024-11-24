@@ -46,7 +46,7 @@ This is a backend API for managing applications, chats, and messages, built with
     ```bash
    git clone "https://github.com/Suleiman99Hesham/chat_system.git"
    cd chat_system
-   docker compose up --build
+   docker compose up -d --build
     ```
 
 2. Run database migrations:
@@ -114,7 +114,7 @@ This is a backend API for managing applications, chats, and messages, built with
 |Variable Name|Description|Default Value|
 |:-:|:-:|:-:|
 |`DATABASE_HOST`|Database host|`db`|
-|`DATABASE_USERNAME`|Database username|`root`|
+|`DATABASE_USERNAME`|Database username|`cs_user`|
 |`DATABASE_PASSWORD`|Database password|`password`|
 |`REDIS_URL`|Redis connection URL|`redis://redis:6379/0`|
 |`ELASTICSEARCH_URL`|Elasticsearch connection URL|`http://elasticsearch:9200`|
