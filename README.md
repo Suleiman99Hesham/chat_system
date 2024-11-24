@@ -44,7 +44,7 @@ This is a backend API for managing applications, chats, and messages, built with
 
 1. Clone the repository and Start the application:
     ```bash
-   git clone <repository_url>
+   git clone "https://github.com/Suleiman99Hesham/chat_system.git"
    cd chat_system
    docker compose up --build
     ```
